@@ -36,3 +36,13 @@ python sample.py
 ```
 docker compose stop
 ```
+
+### git
+#### **非追跡ファイル設定**
+以下、2つ書き方は同じ <br>
+- 開発メンバ共通で非追跡にしたいファイルの非追跡設定 <br>
+.gitignoreに書く <br>
+例）.DS_Store, \_\_pycache__
+- 個人的なファイルの非追跡設定<br>
+.git/info/excludeに書く <br>
+例）sample.py
