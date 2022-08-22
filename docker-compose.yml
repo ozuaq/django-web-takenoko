@@ -1,0 +1,12 @@
+version: '3'
+services:
+  web:
+    restart: always
+    build: .
+    container_name: 'web'
+    command: python3 manage.py runserver 0.0.0.0:8888
+    working_dir: '/usr/src/app/django/muit-takenoko'
+    volumes:
+      - .:/usr/src/app/django/muit-takenoko
+    ports:
+      - "80:8888"
