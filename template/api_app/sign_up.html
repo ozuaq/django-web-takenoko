@@ -2,45 +2,42 @@
 
 {% block title %}アカウント登録{% endblock title %}
 {% block content %}
-<h3>ログイン</h3>
+<h3>アカウント登録</h3>
 
-{% if messages.error %}
-
-{% endif %}
-{% if messages %}
-<ul class="list-group">
-    {% for message in messages %}
-    <li class="list-group-item list-group-item-danger">{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
 <div id="message">
-    Message: [[ message ]]
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-danger">[[ message ]]</li>
+    </ul>
+
+    <div class="mb-3">
+        <label class="form-label">ユーザ名</label>
+        <input id="username" class="form-control" name="userName" type="text" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">パスワード</label>
+        <input name="password" type="password" class="form-control" />
+    </div>
+    <button v-on:click="addUser">登録</button>
 </div>
-<button v-on:click="addUser">Reverse Message</button>
 {% endblock content %}
 {% block script %}
 <script>
+    console.log(document.getElementById("username").value);
     const SignUp = {
         data() {
             return {
-                message: ''
+                message: '',
             }
         },
-        mounted() {
-            axios.post("http://127.0.0.1:8000/api/user/", {
-                username: 'kurakura',
-                password: 'dddddtstone'
-            })
-                .then(function (response) {
-                    this.message = response.username
-                    console.log(response);
-                    console.log(response.username)
+        methods: {
+            addUser() {
+                axios.post("http://127.0.0.1:8000/api/user/", {
+                    username: document.getElementsByName("username").value,
+                    password: document.getElementsByName("password").value,
                 })
-                .catch(function (error) {
-                    this.message = 'すでに登録されているユーザか入力情報に誤りがあります'
-                    console.log(error);
-                });
+                    .then(response => this.message = response.data.username)
+                    .catch(error => this.message = 'エラーです');
+            },
         },
         delimiters: ['[[', ']]']
     }
