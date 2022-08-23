@@ -1,0 +1,28 @@
+{% extends 'api_app/base.html' %}
+{% block content %}
+<div id="counter">
+    Counter: [[ counter ]]
+</div>
+{% endblock content %}
+
+{% block script %}
+<script>
+    const Counter = {
+        data() {
+            return {
+                counter: 0
+            }
+        },
+        mounted() {
+            setInterval(() => {
+                this.counter++
+            }, 1000)
+        },
+        delimiters: ['[[', ']]']
+    }
+
+    Vue.createApp(
+        Counter
+    ).mount('#counter')
+</script>
+{% endblock script %}

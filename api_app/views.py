@@ -90,3 +90,6 @@ def test_result(request):
     if user is not None:
         html = '<html><body>success</body></html>'
     return HttpResponse(html)
+
+def test_vue(request):
+    return render(request, 'api_app/oza_test.html')
