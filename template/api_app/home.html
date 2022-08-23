@@ -1,0 +1,48 @@
+{% extends "api_app/base.html" %}
+{% block head %}
+    <link rel="stylesheet" href="../../static/css/home.css">
+{% endblock %}
+
+{% block title %}
+    ホームページ
+{% endblock %}
+{% block content %}
+    <div style="margin-top:2%;">
+        
+        <span class="display-4">コミュニティー検索</span>
+        <div class="input-group" style="margin-top: 3%;">
+            <div class="search_box">
+                <input type="text" class="form-control search_box" id="search-text" oninput="search()">
+            </div>
+        </div>
+        <button type="button" class="btn btn-outline-primary" style ="margin:1%;" onclick="CreatePage()">作成</button>
+        <div id="parent-div"></div>
+        <div class="center-block" style="text-align:center; margin: 3%;">
+            <button type="button" class="btn btn-outline-dark" onclick="PretPage();">&lt;</button>
+            <a type="button" class="btn btn-outline-dark" onclick="NextPage();">&gt;</a>
+        </div>
+    </div>
+    <div id="app">
+        <h1>{{ message }} hello</h1>
+
+    </div>
+{% endblock %}
+{% block cdn%}
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+{% endblock %}
+
+{% block script %}
+    <script src="../../static/js/home.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+        Vue.createApp({
+            el: '#app',
+            data(){
+                return {
+                    message: 'Hello Axios',
+                }
+            },
+        }).mount('#app')
+    </script>
+{% endblock %}

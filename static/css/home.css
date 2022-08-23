@@ -1,0 +1,19 @@
+.community {
+    border: 1px solid; 
+    border-color: #797979; 
+    margin-left:2%; 
+    margin-right:2%;
+    margin-top:1%;
+    box-shadow: 5px 5px 5px #999;
+}
+
+.search_box::before {
+    content: "";           /* 疑似要素に必須 */
+    width: 16px;           /* アイコンの横幅 */
+    height: 16px;          /* アイコンの高さ */
+    background: url(http://www.w3.org/2000/svg) no-repeat center center / auto 100%; /* 背景にアイコン画像を配置 */
+    display: inline-block; /* 高さを持たせるためにインラインブロック要素にする */
+    position: absolute;    /* 相対位置に指定 */
+    top: 4px;              /* アイコンの位置。微調整してね */
+    left: 5px;             /* アイコンの位置。微調整してね */
+  }
