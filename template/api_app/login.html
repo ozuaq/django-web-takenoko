@@ -1,0 +1,30 @@
+{% extends "api_app/base.html" %}
+
+{% block title %}ログイン{% endblock title %}
+{% block content %}
+<h3>ログイン</h3>
+
+{% if messages.error %}
+
+{% endif %}
+{% if messages %}
+<ul class="list-group">
+    {% for message in messages %}
+    <li class="list-group-item list-group-item-danger">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label class="form-label">ユーザ名</label>
+        <input class="form-control" name="userName" type="text" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">パスワード</label>
+        <input name="password" type="password" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">ログイン</button>
+</form>
+<a href="makeNewAccount.html">新規登録</a>
+{% endblock content %}

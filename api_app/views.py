@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from django.http import HttpResponseRedirect, Http404, HttpResponse
+from django.urls import reverse
 
 from .models.account import Account
 from .models.community import Community
@@ -44,11 +48,45 @@ class WebpageViewSet(viewsets.ModelViewSet):
     queryset = Webpage.objects.all()
     serializer_class = serializer.WebpageSerializer
 
-def test(request):
-    if request.GET.get('account_id'):
-        request.session['account_id'] = request.GET.get('account_id')
-    return render(request, 'api_app/test.html')
+def index(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+    
+    return HttpResponseRedirect(reverse('home'))
+    
+def login_view(request):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            logout(request)
+        return render(request, 'api_app/login.html')
+    if request.method == 'POST':
+        user_name = request.POST.get('userName')
+        password = request.POST.get('password')
+        user = authenticate(username=user_name, password=password)
+        
+        if user is not None:
+            login(request, user)
+            # return HttpResponseRedirect(reverse('home'))
+            html = '<html><body>success</body></html>'
+            return HttpResponse(html)
+                
+        messages.error(request, '入力情報に間違いがあります')
+        return HttpResponseRedirect('.')
+    
+    raise Http404('Request method is not GET or POST.')
+        
+def home_view(request):
+    return render(request, 'api_app/home.html')
+    
+def test_create_user(request):
+    user = User.objects.create_user(username='ozaki', password='muit-hack')
+    user.save()
+    return HttpResponseRedirect(reverse('result'))
 
-def test2(request):
-    if request.GET.get('account_id'):
-        request.session['account_id'] = request.GET.get('account_id')
+def test_result(request):
+    user = authenticate(username='ozaki', password='muit-hack')
+    print(user)
+    html = '<html><body>fail</body></html>'
+    if user is not None:
+        html = '<html><body>success</body></html>'
+    return HttpResponse(html)
