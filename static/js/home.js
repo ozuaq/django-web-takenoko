@@ -1,46 +1,47 @@
 //コミュニティーの数
 let textbox = " ";
-// let community_name = ["勤怠管理システムを作りたい","hello","Machine Learning","S","example","sample"]
-let community_name;
+let community_name = ["勤怠管理システムを作りたい","hello","Machine Learning","S","example","sample"]
+// let community_name;
 let n = 5
 let parentDiv = document.getElementById("parent-div");
 let url = new URL(window.location.href)
 let params = url.searchParams
 let page;
 let user_info
+console.log("hello")
 
 
-async function populate() {
-    const requestURL = 'http://52.69.135.133:8888/api/community/';
-    const request = new Request(requestURL);
+// async function populate() {
+//     const requestURL = 'http://52.69.135.133:8888/api/community/';
+//     const request = new Request(requestURL);
     
-    const response = await fetch(request);
-    const superHeroesText = await response.text();
-    //console.log(superHeroesText);
+//     const response = await fetch(request);
+//     const superHeroesText = await response.text();
+//     //console.log(superHeroesText);
     
-    const superHeroes = JSON.parse(superHeroesText);
-    console.log(superHeroes);
-    community_name = superHeroes
-}
- populate();
+//     const superHeroes = JSON.parse(superHeroesText);
+//     console.log(superHeroes);
+//     community_name = superHeroes
+// }
+//  populate();
 
-async function populateuser() {
-    const requestURL = 'http://52.69.135.133:8888/api/user/';
-    const request = new Request(requestURL);
-    const response = await fetch(request);
-    const superHeroesText = await response.text();
-    const superHeroes = JSON.parse(superHeroesText);
-    console.log(superHeroes);
-    user_info = superHeroes
-}
- populateuser();
- console.log(user_info)
+// async function populateuser() {
+//     const requestURL = 'http://52.69.135.133:8888/api/user/';
+//     const request = new Request(requestURL);
+//     const response = await fetch(request);
+//     const superHeroesText = await response.text();
+//     const superHeroes = JSON.parse(superHeroesText);
+//     console.log(superHeroes);
+//     user_info = superHeroes
+// }
+//  populateuser();
+//  console.log(user_info)
 //検索されたときに発火、コミュニティ検索
 function search(){
     
     // URLSearchParamsオブジェクトを取得
     // let start;
-    console.log(user_info[0].name)
+    // console.log(user_info[0].name)
     console.log(community_name[0])
     params.get('id') == "" ? page = 0 :page = Number(params.get('id'));
     textbox = document.getElementById("search-text");
@@ -104,3 +105,5 @@ function CreatePage(){
     // console.log(url)
 }
 
+
+export default search
