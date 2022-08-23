@@ -7,6 +7,7 @@ app_name = 'api_app'
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('sign_up/', views.sign_up_view, name='sign_up'),
     path('login/', views.login_view, name='login'),
     path('home/', views.home_view, name='home'),
     path('test/', views.test_vue, name='test'),

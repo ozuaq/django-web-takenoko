@@ -53,6 +53,10 @@ def index(request):
         return HttpResponseRedirect(reverse('login'))
     
     return HttpResponseRedirect(reverse('home'))
+
+def sign_up_view(request):
+    if request.method == 'GET':
+        return render(request, 'api_app/sign_up.html')
     
 def login_view(request):
     if request.method == 'GET':
