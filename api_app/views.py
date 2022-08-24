@@ -88,12 +88,14 @@ def home_view(request):
 def community_view(request):
     return render(request, 'api_app/community.html')
 
+
 def profile_view(request):
      if request.method == 'GET':
          return render(request, 'api_app/profile.html')
+    #画像をフォルダに保存する処理
      if request.method == 'POST':
-        uploaded_filename = request.FILES['file']
-        uploaded_filename.save()
+        # uploaded_filename = request.FILES['file']
+        # uploaded_filename.save()
         # fs = FileSystemStorage()
         # filename = fs.save(uploaded_filename.name,uploaded_filename)
 
