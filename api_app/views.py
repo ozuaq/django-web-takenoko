@@ -50,9 +50,9 @@ class WebpageViewSet(viewsets.ModelViewSet):
 
 def index(request):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('login'))
+        return HttpResponseRedirect(reverse('api_app:login'))
     
-    return HttpResponseRedirect(reverse('home'))
+    return HttpResponseRedirect(reverse('api_app:home'))
 
 def sign_up_view(request):
     if request.method == 'GET':
