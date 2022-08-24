@@ -1,54 +1,73 @@
 {% extends "api_app/base.html" %}
 
 {% block title %}アカウント登録{% endblock title %}
+
 {% block content %}
-<h3>ログイン</h3>
+<h3>アカウント登録</h3>
 
-{% if messages.error %}
-
-{% endif %}
-{% if messages %}
-<ul class="list-group">
-    {% for message in messages %}
-    <li class="list-group-item list-group-item-danger">{{ message }}</li>
-    {% endfor %}
+<ul id="messages" class="list-group">
 </ul>
-{% endif %}
-<div id="message">
-    Message: [[ message ]]
+
+<div id="signUpForm">
+    <div class="mb-3">
+        <label class="form-label">ユーザ名</label>
+        <input id="userName" class="form-control" name="userName" type="text" placeholder="userName" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">パスワード</label>
+        <input id="password" name="password" type="password" class="form-control" placeholder="password" />
+    </div>
+    <button onclick="signUp()" type="button" class="btn btn-primary">登録</button>
 </div>
-<button v-on:click="addUser">Reverse Message</button>
+
+<a href="{% url 'api_app:login' %}">ログインへ</a>
+
 {% endblock content %}
+
 {% block script %}
 <script>
-    const SignUp = {
-        data() {
-            message: ''
-        },
-        methods() {
-            create: {
-                axios.post("http://localhost/api/user/", {
-                username: 'kurakura',
-                password: 'dddddtstone'
-             })
-                .then(function (response) {
-                    this.message = response.username
-                    console.log(response);
-                    console.log(response.username)
-                })
-                .catch(function (error) {
-                    this.message = 'すでに登録されているユーザか入力情報に誤りがあります'
-                    console.log(error);
-                });
+    async function signUp(){
+        var userName = await document.getElementById("userName").value;
+        var password = await document.getElementById("password").value;
+        console.log(userName);
 
-            }
-           
-        },
-        delimiters: ['[[', ']]']
+        axios.post('http://127.0.0.1/api/user/', {
+            username: userName,
+            password: password,
+        })
+            .then(function (response) {
+                console.log(response);
+                setMessage(false, response);
+            })
+            .catch(function (error) {
+                console.log(error);
+                setMessage(true, error);
+            });
+    }
+    
+    async function removeAllChild(node){
+        while (messages.firstChild) {
+            messages.removeChild(messages.firstChild);
+        }
+
     }
 
-    Vue.createApp(
-        SignUp
-    ).mount('#message')
+    async function setMessage(isError, response) {
+        var messages = await document.getElementById("messages");
+        var message = await document.createElement("li");
+
+        await removeAllChild(messages);
+        
+        // <li class="list-group-item list-group-item-danger">{{ message }}</li>
+        if (!isError) {
+            message.className = "list-group-item list-group-item-primary";
+            var userName = response.data.username;
+            message.innerHTML = userName + "が登録されました";
+        } else {
+            message.className = "list-group-item list-group-item-danger";
+            message.innerHTML = "すでに使われているユーザ名か入力情報に誤りがあります";
+        }
+        messages.appendChild(message);
+    }
 </script>
 {% endblock script %}

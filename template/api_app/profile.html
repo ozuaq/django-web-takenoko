@@ -1,0 +1,73 @@
+{% extends 'api_app/base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class= "title">
+            <p class="display-1" id="name"></p>
+        </div>
+            <div class="card" style="width: 35rem; margin-left: 15%; margin-top: 5%; box-shadow: 5px;">
+                <div class="card-body">
+                    <h5 class="card-title">所属コニュニティー</h5>
+                    <p class="card-text"><div id="parent-div"></div></p>
+                </div>
+            </div>
+    </div>
+    <div class="col-md-4">
+        <img  alt="user_icon" class="img" id="img">
+        <p class="id" id="id">ID:</p>
+        <p class="Option" id="Result">問題解決数：</p>
+        <p class="Option">
+            技術タグ:
+            <span id="skill" style="margin-right: 5px;">
+            </span>
+        </p>
+        <button class="btn btn-primary git" onclick="GetGitHub()">GitHub</button>
+    </div>
+</div>
+<form method="post" action="{% url 'api_app:profile' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <input type="file">
+    <button type="submit" class="btn btn-primary" name="file">ログイン</button>
+</form>
+
+<!-- <div id="app">
+    <input type="file" ref="preview" @change="uploadFile">   
+    <div v-if="url">
+        <img :src="url">
+      </div>
+
+</div> -->
+{% endblock %}
+
+{% block script%}
+<script>
+ 
+    new Vue({
+    el: '#app',
+    data: {
+        users: [],
+        url:""
+    },
+    methods:{
+        uploadFile(){
+            const file = this.$refs.preview.files[0];
+            this.url = URL.createObjectURL(file)
+            console.log(this.url)
+        }
+    },
+    delimiters: ['**', '**'],
+    mounted :function(){
+        console.log(this.$refs.preview)
+        console.log(this.$refs.texts)
+    //     axios.get(`https://jsonplaceholder.typicode.com/users?id=${1}`)
+    //         .then(response => this.users = response.data)
+    //         .catch(error => console.log(error))
+    },
+    
+})
+
+   
+</script>
+{% endblock %}
+

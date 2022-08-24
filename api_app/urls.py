@@ -12,5 +12,6 @@ urlpatterns = [
     path('home/', views.home_view, name='home'),
     path('community/',views.community_view,name='community'),
     path('test/', views.test_vue, name='test'),
-    path('result/', views.test_result, name='result')
+    path('result/', views.test_result, name='result'),
+    path('profile/',views.profile_view,name='profile')
 ]

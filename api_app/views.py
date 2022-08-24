@@ -5,6 +5,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.urls import reverse
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+
 
 from .models.account import Account
 from .models.community import Community
@@ -50,9 +53,9 @@ class WebpageViewSet(viewsets.ModelViewSet):
 
 def index(request):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('login'))
+        return HttpResponseRedirect(reverse('api_app:login'))
     
-    return HttpResponseRedirect(reverse('home'))
+    return HttpResponseRedirect(reverse('api_app:home'))
 
 def sign_up_view(request):
     if request.method == 'GET':
@@ -84,6 +87,18 @@ def home_view(request):
 
 def community_view(request):
     return render(request, 'api_app/community.html')
+
+def profile_view(request):
+     if request.method == 'GET':
+         return render(request, 'api_app/profile.html')
+     if request.method == 'POST':
+        uploaded_filename = request.FILES['file']
+        uploaded_filename.save()
+        # fs = FileSystemStorage()
+        # filename = fs.save(uploaded_filename.name,uploaded_filename)
+
+
+
     
 def test_create_user(request):
     user = User.objects.create_user(username='ozaki', password='muit-hack')
