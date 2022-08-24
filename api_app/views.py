@@ -81,6 +81,9 @@ def login_view(request):
         
 def home_view(request):
     return render(request, 'api_app/home.html')
+
+def community_view(request):
+    return render(request, 'api_app/community.html')
     
 def test_create_user(request):
     user = User.objects.create_user(username='ozaki', password='muit-hack')

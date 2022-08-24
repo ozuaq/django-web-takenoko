@@ -1,6 +1,7 @@
 //コミュニティーの数
+// import community_name  from './search.js'
 let textbox = " ";
-let community_name = ["勤怠管理システムを作りたい","hello","Machine Learning","S","example","sample"]
+// let community_name = ["勤怠管理システムを作りたい","hello","Machine Learning","S","example","sample"]
 // let community_name;
 let n = 5
 
@@ -38,55 +39,74 @@ let user_info
 //  console.log(user_info)
 //検索されたときに発火、コミュニティ検索
 
-// function search(){
-//     let parentDiv = document.getElementById("parent-div");
-//     params.get('id') == "" ? page = 0 :page = Number(params.get('id'));
-//     textbox = document.getElementById("search-text");
-//     while(parentDiv.firstChild) parentDiv.removeChild(parentDiv.firstChild);
-   
-//     for(let i = page*5;i < (page+1)*5;i++){      
-//         let linkURL = ""
-       
-//         if(textbox.value == ""){
-//             if(community_name[i] == undefined) break;
-//             var newElement = document.createElement("a"); 
-//             var newContent = document.createTextNode(`${community_name[i]}`) 
-//             newElement.appendChild(newContent); 
-//             // url.searchParams.set('id',i);
-//             linkURL = `community.html?id=${community_name[i].id}`;
-//             // linkURL = linkURL + community_name[i];
-//             newElement.href = linkURL
-//             newElement.classList.add('nav-item')
-//             newElement.classList.add('nav-link')
-//             newElement.classList.add('active')
-//             newElement.classList.add('community')
-//             newElement.setAttribute("id",`${community_name[i]}`) 
-//             parentDiv.appendChild(newElement)
-//         }
-       
-//         if(textbox.value != ""){
-//             if(community_name[i] == "") break;
-//             if(community_name[i].match(textbox.value)) {
-//                 var newElement = document.createElement("a")
-//                 var newContent = document.createTextNode(`${community_name[i]}`)
-//                 newElement.appendChild(newContent)
-//                 linkURL = linkURL + community_name[i].name
-//                 newElement.href = linkURL
-//                 newElement.classList.add('nav-item')
-//                 newElement.classList.add('nav-link')
-//                 newElement.classList.add('active')
-//                 newElement.classList.add('community')
-//                 newElement.setAttribute("id",`${community_name[i]}`)
-//                 parentDiv.appendChild(newElement)
-//             }
-//         } 
-//     }
-// }   
+function search(){
+    console.log("Hello")
+    let community_name = []
+    axios.get('https://jsonplaceholder.typicode.com/users')
+    .then(function (response) {
+        community_name.length = 0
+    // handle success(axiosの処理が成功した場合に処理させたいことを記述)
+        for(let i in response.data) community_name.push({"name":response.data[i].name,"id":response.data[i].id})
+        
+    })
+    .catch(function (error) {
+    // handle error(axiosの処理にエラーが発生した場合に処理させたいことを記述)
+        console.log(error);
+    })
+    .finally(function () {
+        let textbox = " ";
+        let url = new URL(window.location.href)
+        let params = url.searchParams
+        let page;
+        let parentDiv = document.getElementById("parent-div");
+        params.get('id') == "" ? page = 0 :page = Number(params.get('id'));
+        textbox = document.getElementById("search-text");
+        while(parentDiv.firstChild) parentDiv.removeChild(parentDiv.firstChild);
+        let linkURL =  `${location.protocol}//${location.hostname}/community`;
+        for(let i = 0;i < community_name.length;i++){      
+            if(textbox.value == ""){
+                if(community_name[i]['name'] == undefined) break;
+                var newElement = document.createElement("a"); 
+                var newContent = document.createTextNode(`${community_name[i]['name']}`) 
+                newElement.appendChild(newContent); 
+                // url.searchParams.set('id',i);
+                // linkURL = linkURL +`?${community_name[i]}`;
+                // linkURL ="{% url 'api_app:community' %}"
+                // linkURL = linkURL + community_name[i];
+                newElement.href = linkURL + `?${community_name[i]['id']}`
+                newElement.classList.add('nav-item')
+                newElement.classList.add('nav-link')
+                newElement.classList.add('active')
+                newElement.classList.add('community')
+                newElement.setAttribute("id",`${community_name[i]['ud']}`) 
+                parentDiv.appendChild(newElement)
+            }
+            if(textbox.value != ""){
+                if(community_name[i]['name'] == "") break;
+                if(community_name[i]['name'].match(textbox.value)) {
+                    var newElement = document.createElement("a")
+                    var newContent = document.createTextNode(`${community_name[i]['name']}`)
+                    newElement.appendChild(newContent)
+                    // linkURL = linkURL + community_name[i]
+                    newElement.href = linkURL + `?${community_name[i]['id']}`
+                    newElement.classList.add('nav-item')
+                    newElement.classList.add('nav-link')
+                    newElement.classList.add('active')
+                    newElement.classList.add('community')
+                    newElement.setAttribute("id",`${community_name[i]['id']}`)
+                    parentDiv.appendChild(newElement)
+                }
+            } 
+        }
+
+    });
+ 
+}   
 
 function NextPage(){
     
     const url = new URL(window.location.href)
-    
+    alert(community_name.length)
     if(community_name.length > page*5)page = page + 1
     url.searchParams.set('id', page);
     location.href = url.href;

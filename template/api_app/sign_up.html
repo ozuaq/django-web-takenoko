@@ -23,15 +23,14 @@
 <script>
     const SignUp = {
         data() {
-            return {
-                message: ''
-            }
+            message: ''
         },
-        mounted() {
-            axios.post("http://127.0.0.1:8000/api/user/", {
+        methods() {
+            create: {
+                axios.post("http://localhost/api/user/", {
                 username: 'kurakura',
                 password: 'dddddtstone'
-            })
+             })
                 .then(function (response) {
                     this.message = response.username
                     console.log(response);
@@ -41,6 +40,9 @@
                     this.message = 'すでに登録されているユーザか入力情報に誤りがあります'
                     console.log(error);
                 });
+
+            }
+           
         },
         delimiters: ['[[', ']]']
     }

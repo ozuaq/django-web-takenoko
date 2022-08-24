@@ -3,13 +3,14 @@
 {% block head %}
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <script src="{% static 'js/home.js' %}"></script>
+    <!-- <script src="{% static 'js/search.js' %}"></script> -->
 {% endblock %}
 
 {% block title %}
     ホームページ
 {% endblock %}
 {% block content %}
-    <div style="margin-top:2%;">
+    <div style="margin-top:2%;margin-bottom: 4%;">
         <span class="display-4">コミュニティー検索</span>
         <div class="input-group" style="margin-top: 3%;">
             <div class="search_box">
@@ -17,17 +18,17 @@
             </div>
         </div>
         <button type="button" class="btn btn-outline-primary" style ="margin:1%;" onclick="CreatePage()">作成</button>
-        <div id="parent-div"></div>
-        <div class="center-block" style="text-align:center; margin: 3%;">
+        <div id="parent-div" class="community-list"></div>
+        <!-- <div class="center-block" style="text-align:center; margin: 3%;">
             <button type="button" class="btn btn-outline-dark" onclick="PretPage();">&lt;</button>
             <a type="button" class="btn btn-outline-dark" onclick="NextPage();">&gt;</a>
-        </div>
+        </div> -->
+
     </div>
     <!-- <button onclick="search()">click</button> -->
     <!-- <div id="counter">
         
     </div> -->
-    
 {% endblock %}
 
 {% block script %}

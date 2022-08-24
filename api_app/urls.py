@@ -10,6 +10,7 @@ urlpatterns = [
     path('sign_up/', views.sign_up_view, name='sign_up'),
     path('login/', views.login_view, name='login'),
     path('home/', views.home_view, name='home'),
+    path('community/',views.community_view,name='community'),
     path('test/', views.test_vue, name='test'),
     path('result/', views.test_result, name='result')
 ]
